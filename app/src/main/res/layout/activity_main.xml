@@ -17,6 +17,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:hint="Insert text"
+            android:saveEnabled="false"
             />
 
         <ToggleButton

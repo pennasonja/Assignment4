@@ -4,15 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 
 import abhiandroid.com.splashscreen.R;
 
+import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
+
 public class MainActivity extends AppCompatActivity {
     ToggleButton btn;
     EditText eText;
+    static final String KEY_TEXT_VALUE="textValue";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +32,23 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     eText.setEnabled(true);
                 }
-
             }
         });
-
+        if (savedInstanceState!=null){
+            CharSequence savedText = savedInstanceState.getCharSequence(KEY_TEXT_VALUE);
+            eText.setText(savedText);
+        }
     }
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
-        //
+        outState.putCharSequence(KEY_TEXT_VALUE,eText.getText());
+        outState.putBoolean("boolean",eText.isEnabled());
     }
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        eText.setEnabled(savedInstanceState.getBoolean("boolean"));
     }
+}
+
